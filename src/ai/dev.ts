@@ -7,3 +7,4 @@ import '@/ai/flows/answer-questions-with-context.ts';
 import '@/ai/flows/generate-initial-study-plan.ts';
 import '@/ai/flows/text-to-speech-accessibility.ts';
 import '@/ai/flows/explain-complex-concepts.ts';
+import '@/ai/flows/live-tutor.ts';
