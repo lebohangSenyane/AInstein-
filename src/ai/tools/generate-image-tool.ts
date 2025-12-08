@@ -27,15 +27,14 @@ export const generateImageTool = ai.defineTool(
     }),
   },
   async input => {
-    const llmResponse = await ai.generate({
-      prompt: `generate an image of ${input.prompt}`,
-      model: 'googleai/gemini-pro-vision',
+    const {media} = await ai.generate({
+      model: 'googleai/imagen-2.0-fast-generate-001',
+      prompt: input.prompt,
     });
     
-    const imagePart = llmResponse.output()?.content[0];
-    if (imagePart?.media) {
+    if (media.url) {
         return {
-            imageUrl: imagePart.media.url
+            imageUrl: media.url
         }
     }
     
