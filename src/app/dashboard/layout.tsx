@@ -95,8 +95,10 @@ export default function DashboardLayout({
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                href="/dashboard/settings"
+                className={cn("flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
+                  pathname === "/dashboard/settings" && "bg-accent text-accent-foreground"
+                )}
               >
                 <Settings className="h-5 w-5" />
                 <span className="sr-only">Settings</span>
@@ -147,8 +149,10 @@ export default function DashboardLayout({
                 System Health
             </Link>
           <Link
-            href="#"
-            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+            href="/dashboard/settings"
+            className={cn("flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground",
+              pathname === "/dashboard/settings" && "text-foreground"
+            )}
           >
             <Settings className="h-5 w-5" />
             Settings
@@ -177,7 +181,9 @@ export default function DashboardLayout({
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/dashboard/settings">Settings</Link>
+          </DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
