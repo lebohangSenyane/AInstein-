@@ -31,13 +31,13 @@ export async function answerQuestionsWithContext(input: AnswerQuestionsWithConte
 const prompt = ai.definePrompt({
   name: 'answerQuestionsWithContextPrompt',
   input: {schema: AnswerQuestionsWithContextInputSchema},
-  output: {schema: AnswerQuestionsWithContextOutputSchema},
   // tools: [generateImageTool], // Temporarily disabled due to billing requirements
   prompt: `You are an AI study assistant named AInstein. Your task is to answer questions.
 First, try to answer the question based on the provided context.
 If the context does not contain the answer, use your own general knowledge.
 If the user asks for an image, diagram, or visualization, you should state that you cannot create images at this time.
 Do not describe the image you are about to generate.
+Your answer should be a simple string, without any special formatting or JSON structure.
 
 Context: {{{context}}}
 
