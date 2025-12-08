@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { answerQuestionsWithContext } from "@/ai/flows/answer-questions-with-context";
-import { imageBasedQuestionAnswering } from "@/ai/flows/image-based-question-answering";
+import { analyzeImage } from "@/ai/flows/analyze-image-flow";
 
 type ChatMessage = {
   role: "user" | "assistant";
@@ -74,7 +74,7 @@ export function ChatInterface() {
       let response: ChatMessage;
       if (imageFile) {
         const photoDataUri = await fileToDataUri(imageFile);
-        const result = await imageBasedQuestionAnswering({
+        const result = await analyzeImage({
           photoDataUri,
           question: input,
         });

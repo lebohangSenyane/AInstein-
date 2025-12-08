@@ -8,6 +8,7 @@ import {
   Settings,
   UserCircle,
   PanelLeft,
+  Eye,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -38,6 +39,7 @@ export default function DashboardLayout({
 
   const navItems = [
     { href: "/dashboard", icon: MessageSquare, label: "Chat" },
+    { href: "/dashboard/vision-lab", icon: Eye, label: "Vision Lab" },
     { href: "/dashboard/accessibility", icon: Ear, label: "Accessibility" },
   ];
 
