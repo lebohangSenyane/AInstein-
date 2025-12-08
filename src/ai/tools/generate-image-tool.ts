@@ -27,12 +27,20 @@ export const generateImageTool = ai.defineTool(
     }),
   },
   async input => {
-    const {media} = await ai.generate({
-      model: 'googleai/imagen-4.0-fast-generate-001',
-      prompt: input.prompt,
+    const llmResponse = await ai.generate({
+      prompt: `generate an image of ${input.prompt}`,
+      model: 'googleai/gemini-pro-vision',
     });
+    
+    const imagePart = llmResponse.output()?.content[0];
+    if (imagePart?.media) {
+        return {
+            imageUrl: imagePart.media.url
+        }
+    }
+    
     return {
-      imageUrl: media.url,
+        imageUrl: ''
     };
   }
 );

@@ -56,9 +56,14 @@ const answerQuestionsWithContextFlow = ai.defineFlow(
     const llmResponse = await prompt(input);
     const toolResponse = llmResponse.toolRequest?.output('generateImageTool');
     
+    let imageUrl: string | undefined;
+    if (toolResponse) {
+      imageUrl = toolResponse.imageUrl;
+    }
+
     return {
       answer: llmResponse.text,
-      imageUrl: toolResponse?.imageUrl,
+      imageUrl: imageUrl,
     }
   }
 );
