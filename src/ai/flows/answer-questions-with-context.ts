@@ -32,11 +32,11 @@ const prompt = ai.definePrompt({
   name: 'answerQuestionsWithContextPrompt',
   input: {schema: AnswerQuestionsWithContextInputSchema},
   output: {schema: AnswerQuestionsWithContextOutputSchema},
-  tools: [generateImageTool],
+  // tools: [generateImageTool], // Temporarily disabled due to billing requirements
   prompt: `You are an AI study assistant named AInstein. Your task is to answer questions.
 First, try to answer the question based on the provided context.
 If the context does not contain the answer, use your own general knowledge.
-If the user asks for an image, diagram, or visualization, you must use the generateImageTool to create one.
+If the user asks for an image, diagram, or visualization, you should state that you cannot create images at this time.
 Do not describe the image you are about to generate.
 
 Context: {{{context}}}
@@ -54,12 +54,12 @@ const answerQuestionsWithContextFlow = ai.defineFlow(
   },
   async input => {
     const llmResponse = await prompt(input);
-    const toolResponse = llmResponse.toolRequest?.output('generateImageTool');
+    // const toolResponse = llmResponse.toolRequest?.output('generateImageTool');
     
     let imageUrl: string | undefined;
-    if (toolResponse) {
-      imageUrl = toolResponse.imageUrl;
-    }
+    // if (toolResponse) {
+    //   imageUrl = toolResponse.imageUrl;
+    // }
 
     return {
       answer: llmResponse.text,
