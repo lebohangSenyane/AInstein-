@@ -88,7 +88,7 @@ export function ChatInterface() {
           question: input,
           context: context,
         });
-        response = { role: "assistant", content: result.answer };
+        response = { role: "assistant", content: result.answer, image: result.imageUrl };
       }
       setMessages((prev) => [...prev, response]);
     } catch (error) {
@@ -122,9 +122,9 @@ export function ChatInterface() {
                   {message.image && (
                     <Image
                       src={message.image}
-                      alt="User upload"
+                      alt="Generated image"
                       width={300}
-                      height={200}
+                      height={300}
                       className="rounded-lg mb-2"
                     />
                   )}

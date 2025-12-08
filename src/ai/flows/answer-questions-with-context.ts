@@ -10,6 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import {generateImageTool} from '../tools/generate-image-tool';
 
 const AnswerQuestionsWithContextInputSchema = z.object({
   question: z.string().describe('The question to be answered.'),
@@ -19,6 +20,7 @@ export type AnswerQuestionsWithContextInput = z.infer<typeof AnswerQuestionsWith
 
 const AnswerQuestionsWithContextOutputSchema = z.object({
   answer: z.string().describe('The answer to the question.'),
+  imageUrl: z.string().optional().describe('The data URI of a generated image, if any.'),
 });
 export type AnswerQuestionsWithContextOutput = z.infer<typeof AnswerQuestionsWithContextOutputSchema>;
 
@@ -30,9 +32,12 @@ const prompt = ai.definePrompt({
   name: 'answerQuestionsWithContextPrompt',
   input: {schema: AnswerQuestionsWithContextInputSchema},
   output: {schema: AnswerQuestionsWithContextOutputSchema},
+  tools: [generateImageTool],
   prompt: `You are an AI study assistant named AInstein. Your task is to answer questions.
 First, try to answer the question based on the provided context.
 If the context does not contain the answer, use your own general knowledge.
+If the user asks for an image, diagram, or visualization, you must use the generateImageTool to create one.
+Do not describe the image you are about to generate.
 
 Context: {{{context}}}
 
@@ -48,7 +53,12 @@ const answerQuestionsWithContextFlow = ai.defineFlow(
     outputSchema: AnswerQuestionsWithContextOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
-    return output!;
+    const llmResponse = await prompt(input);
+    const toolResponse = llmResponse.toolRequest?.output('generateImageTool');
+    
+    return {
+      answer: llmResponse.text,
+      imageUrl: toolResponse?.imageUrl,
+    }
   }
 );
